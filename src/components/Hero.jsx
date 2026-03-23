@@ -3,7 +3,6 @@ import { motion, useScroll, useTransform, useSpring } from 'framer-motion'
 
 export default function Hero() {
   const containerRef = useRef(null)
-  const [transformComplete, setTransformComplete] = useState(false)
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -24,45 +23,29 @@ export default function Hero() {
   const textOpacity = useTransform(smoothProgress, [0.65, 0.85], [0, 1])
   const textY = useTransform(smoothProgress, [0.65, 0.85], [40, 0])
 
-  // Progress bar width
-  const progressWidth = useTransform(smoothProgress, [0, 0.7], ['0%', '100%'])
-
   // Badge scale
   const badgeScale = useTransform(smoothProgress, [0.7, 0.85], [0, 1])
 
-  // Track completion
-  useEffect(() => {
-    const unsubscribe = scrollYProgress.on('change', (v) => {
-      setTransformComplete(v > 0.8)
-    })
-    return () => unsubscribe()
-  }, [scrollYProgress])
-
   return (
     <section ref={containerRef} className="relative" style={{ height: '300vh' }}>
-      {/* Sticky viewport container */}
-      <div className="sticky top-0 h-screen w-full overflow-hidden bg-slate-950">
-        {/* Background ambient glow */}
-        <div className="absolute inset-0">
-          <div className="absolute top-1/4 left-1/4 w-[600px] h-[600px] bg-brand-500/5 rounded-full blur-[120px]" />
-          <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-brand-600/5 rounded-full blur-[100px]" />
-        </div>
+      {/* Sticky viewport container — white background */}
+      <div className="sticky top-0 h-screen w-full overflow-hidden bg-white">
 
         {/* Car transformation area */}
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="relative w-full max-w-5xl mx-auto px-6">
             {/* Dirty car (base layer) */}
-            <div className="relative rounded-3xl overflow-hidden shadow-2xl shadow-black/40">
+            <div className="relative rounded-3xl overflow-hidden">
               <img
                 src="/images/car-dirty.png"
-                alt="Car before detailing - dirty and dusty"
+                alt="Car before detailing - slightly dirty"
                 className="w-full h-auto object-cover"
               />
             </div>
 
             {/* Clean car (reveal layer with clip-path) */}
             <motion.div
-              className="absolute inset-0 rounded-3xl overflow-hidden shadow-2xl shadow-brand-500/10"
+              className="absolute inset-0 rounded-3xl overflow-hidden"
               style={{
                 clipPath: useTransform(clipRight, (v) => `inset(0 ${v}% 0 0)`),
               }}
@@ -74,7 +57,7 @@ export default function Hero() {
               />
               {/* Shine sweep effect on the clean car */}
               <motion.div
-                className="absolute inset-0 bg-gradient-to-r from-transparent via-white/15 to-transparent"
+                className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
                 style={{
                   x: useTransform(smoothProgress, [0.4, 0.75], ['-100%', '200%']),
                 }}
@@ -103,14 +86,14 @@ export default function Hero() {
           style={{ opacity: textOpacity, y: textY }}
         >
           <div className="max-w-4xl mx-auto px-6 text-center">
-            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-white leading-[1.1] tracking-tight mb-4">
+            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-slate-900 leading-[1.1] tracking-tight mb-4">
               Your Car Deserves{' '}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 to-brand-500">
                 Showroom
               </span>{' '}
               Perfection
             </h1>
-            <p className="text-base sm:text-lg text-slate-400 max-w-xl mx-auto mb-8">
+            <p className="text-base sm:text-lg text-slate-500 max-w-xl mx-auto mb-8">
               Expert ceramic coatings, paint correction, and full interior restoration. We don't just clean — we transform.
             </p>
             <a
@@ -126,22 +109,14 @@ export default function Hero() {
           </div>
         </motion.div>
 
-        {/* Progress bar at bottom */}
-        <div className="absolute bottom-0 left-0 right-0 h-1 bg-slate-800">
-          <motion.div
-            className="h-full bg-gradient-to-r from-brand-500 to-brand-400 rounded-full"
-            style={{ width: progressWidth }}
-          />
-        </div>
-
         {/* Scroll hint — fades out as user starts scrolling */}
         <motion.div
           className="absolute bottom-8 left-1/2 -translate-x-1/2"
           style={{ opacity: useTransform(smoothProgress, [0, 0.1], [1, 0]) }}
         >
-          <div className="flex flex-col items-center gap-2 text-slate-500">
+          <div className="flex flex-col items-center gap-2 text-slate-400">
             <span className="text-xs font-medium uppercase tracking-widest">Scroll to reveal</span>
-            <div className="w-6 h-10 border-2 border-slate-600 rounded-full flex justify-center pt-2">
+            <div className="w-6 h-10 border-2 border-slate-300 rounded-full flex justify-center pt-2">
               <motion.div
                 className="w-1.5 h-1.5 bg-brand-500 rounded-full"
                 animate={{ y: [0, 12, 0] }}
@@ -156,17 +131,17 @@ export default function Hero() {
           className="absolute bottom-24 right-6 sm:bottom-32 sm:right-12 hidden sm:flex"
           style={{ scale: badgeScale, opacity: badgeScale }}
         >
-          <div className="bg-white/10 backdrop-blur-md border border-white/10 rounded-2xl px-6 py-4 flex items-center gap-6">
+          <div className="bg-slate-900/90 backdrop-blur-md border border-slate-700/50 rounded-2xl px-6 py-4 flex items-center gap-6">
             <div className="text-center">
               <div className="text-xl font-bold text-white">2,500+</div>
               <div className="text-xs text-slate-400">Cars Detailed</div>
             </div>
-            <div className="w-px h-8 bg-white/10" />
+            <div className="w-px h-8 bg-slate-700" />
             <div className="text-center">
               <div className="text-xl font-bold text-white">4.9 ★</div>
               <div className="text-xs text-slate-400">Rating</div>
             </div>
-            <div className="w-px h-8 bg-white/10" />
+            <div className="w-px h-8 bg-slate-700" />
             <div className="text-center">
               <div className="text-xl font-bold text-white">8+</div>
               <div className="text-xs text-slate-400">Years</div>
