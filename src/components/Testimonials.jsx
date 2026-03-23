@@ -1,3 +1,5 @@
+import { motion } from 'framer-motion'
+
 const testimonials = [
   {
     quote: "I've taken my M4 to a lot of places, but DetailCraft Pro is on another level. The ceramic coating still beads water perfectly after six months. My car literally looks better than the day I picked it up from the dealership.",
@@ -34,12 +36,36 @@ function StarRating({ count }) {
   )
 }
 
+const containerVariants = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.15,
+    },
+  },
+}
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 50 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { type: 'spring', stiffness: 80, damping: 18 },
+  },
+}
+
 export default function Testimonials() {
   return (
-    <section id="testimonials" className="py-24 bg-white">
+    <section id="testimonials" className="py-32 bg-white">
       <div className="max-w-7xl mx-auto px-6">
         {/* Section Header */}
-        <div className="text-center max-w-2xl mx-auto mb-16 animate-on-scroll">
+        <motion.div
+          className="text-center max-w-2xl mx-auto mb-16"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-100px' }}
+          transition={{ type: 'spring', stiffness: 80, damping: 20 }}
+        >
           <p className="text-sm font-semibold text-brand-600 uppercase tracking-widest mb-3">Customer Stories</p>
           <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 tracking-tight">
             Don't take our word for it
@@ -47,14 +73,22 @@ export default function Testimonials() {
           <p className="mt-4 text-lg text-slate-500">
             Hear from real car owners who trusted us with their vehicles.
           </p>
-        </div>
+        </motion.div>
 
         {/* Testimonial Cards */}
-        <div className="grid md:grid-cols-3 gap-8">
-          {testimonials.map((t, i) => (
-            <div
+        <motion.div
+          className="grid md:grid-cols-3 gap-8"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: '-80px' }}
+        >
+          {testimonials.map((t) => (
+            <motion.div
               key={t.name}
-              className={`animate-on-scroll delay-${(i + 1) * 100} bg-stone-50 rounded-2xl p-8 border border-slate-100 hover:border-brand-200/60 hover:shadow-lg hover:shadow-brand-500/5 transition-all duration-300`}
+              variants={cardVariants}
+              whileHover={{ y: -4, transition: { type: 'spring', stiffness: 300, damping: 20 } }}
+              className="bg-stone-50 rounded-2xl p-8 border border-slate-100 hover:border-brand-200/60 hover:shadow-lg hover:shadow-brand-500/5 transition-shadow duration-300"
             >
               <StarRating count={t.rating} />
               <blockquote className="mt-5 text-slate-600 text-sm leading-relaxed">
@@ -71,9 +105,9 @@ export default function Testimonials() {
                   <div className="text-xs text-slate-500">{t.title}</div>
                 </div>
               </div>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   )

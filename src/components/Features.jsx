@@ -1,3 +1,5 @@
+import { motion } from 'framer-motion'
+
 const features = [
   {
     icon: (
@@ -55,12 +57,37 @@ const features = [
   },
 ]
 
+const containerVariants = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.1,
+    },
+  },
+}
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 40, scale: 0.95 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: { type: 'spring', stiffness: 100, damping: 15 },
+  },
+}
+
 export default function Features() {
   return (
-    <section id="features" className="py-24 bg-stone-50">
+    <section id="features" className="py-32 bg-stone-50">
       <div className="max-w-7xl mx-auto px-6">
         {/* Section Header */}
-        <div className="text-center max-w-2xl mx-auto mb-16 animate-on-scroll">
+        <motion.div
+          className="text-center max-w-2xl mx-auto mb-16"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-100px' }}
+          transition={{ type: 'spring', stiffness: 80, damping: 20 }}
+        >
           <p className="text-sm font-semibold text-brand-600 uppercase tracking-widest mb-3">Our Services</p>
           <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 tracking-tight">
             Everything your car needs to{' '}
@@ -69,23 +96,31 @@ export default function Features() {
           <p className="mt-4 text-lg text-slate-500">
             From quick touch-ups to complete transformations, we handle every detail with obsessive precision.
           </p>
-        </div>
+        </motion.div>
 
         {/* Feature Grid */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {features.map((feature, i) => (
-            <div
+        <motion.div
+          className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: '-80px' }}
+        >
+          {features.map((feature) => (
+            <motion.div
               key={feature.title}
-              className={`animate-on-scroll delay-${(i + 1) * 100} group bg-white rounded-2xl p-7 border border-slate-100 hover:border-brand-200/60 shadow-sm hover:shadow-lg hover:shadow-brand-500/5 hover:-translate-y-1 transition-all duration-300 cursor-default`}
+              variants={cardVariants}
+              whileHover={{ y: -6, transition: { type: 'spring', stiffness: 300, damping: 20 } }}
+              className="group bg-white rounded-2xl p-7 border border-slate-100 hover:border-brand-200/60 shadow-sm hover:shadow-lg hover:shadow-brand-500/5 transition-shadow duration-300 cursor-default"
             >
               <div className="w-12 h-12 bg-brand-50 rounded-xl flex items-center justify-center text-brand-600 mb-5 group-hover:bg-brand-500 group-hover:text-white transition-colors duration-300">
                 {feature.icon}
               </div>
               <h3 className="text-lg font-bold text-slate-900 mb-2">{feature.title}</h3>
               <p className="text-sm text-slate-500 leading-relaxed">{feature.description}</p>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   )

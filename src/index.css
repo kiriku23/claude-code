@@ -13,23 +13,12 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* ===== Scroll Animation Classes ===== */
-.animate-on-scroll {
-  opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+/* ===== Hide default cursor on desktop for custom cursor ===== */
+@media (hover: hover) and (pointer: fine) {
+  * {
+    cursor: none !important;
+  }
 }
-
-.animate-on-scroll.is-visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.animate-on-scroll.delay-100 { transition-delay: 0.1s; }
-.animate-on-scroll.delay-200 { transition-delay: 0.2s; }
-.animate-on-scroll.delay-300 { transition-delay: 0.3s; }
-.animate-on-scroll.delay-400 { transition-delay: 0.4s; }
-.animate-on-scroll.delay-500 { transition-delay: 0.5s; }
 
 /* ===== Custom Scrollbar ===== */
 ::-webkit-scrollbar {

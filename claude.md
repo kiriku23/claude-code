@@ -67,8 +67,8 @@
 ### Design Tokens
 - Border radius: rounded-xl to rounded-2xl
 - Shadows: soft (shadow-sm, shadow-md)
-- Spacing: generous whitespace (py-20 to py-24 sections)
-- Animations: fade-in on scroll, hover scale on cards/buttons
+- Spacing: generous whitespace, sections must have significant breathing room (`py-32`)
+- Animations: Silky smooth, physics-based spring animations, staggered reveals, and a custom interactive cursor tracking mouse movement.
 
 ---
 
@@ -78,14 +78,16 @@
 2. Real, business-specific copy — no lorem ipsum
 3. Fully responsive — phone and desktop
 4. CTA button ("Ready!") appears above fold AND near bottom
-5. Subtle animations only — no flashy or distracting effects
+5. **Animations must be buttery smooth, utilizing physics-based springs (via Framer Motion) for entries, hovers, and reveals.**
+6. **Every section must have distinct, generous padding/margin to stand on its own momentarily during scroll.**
+7. **The site features a custom interactive cursor that follows the user's mouse and reacts to actionable elements.**
 
 ---
 
 ## Architectural Invariants
 
 1. Single-page, no routing
-2. React + Vite + Tailwind CSS
+2. React + Vite + Tailwind CSS + **Framer Motion**
 3. All components in `src/components/`
 4. Production-ready, clean code
 5. `claude.md` is updated before code when schemas/rules change
@@ -98,3 +100,4 @@
 |------|--------|--------|
 | 2026-03-23 | Initial skeleton created | Protocol 0 |
 | 2026-03-23 | Discovery answers + schema + design system defined | Phase 1 Blueprint |
+| 2026-03-23 | Added Framer Motion and custom cursor behavioral rules | Post-launch enhancements |

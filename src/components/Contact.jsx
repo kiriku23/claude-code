@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { motion } from 'framer-motion'
 
 export default function Contact() {
   const [formData, setFormData] = useState({ name: '', email: '', message: '' })
@@ -12,11 +13,16 @@ export default function Contact() {
   }
 
   return (
-    <section id="contact" className="py-24 bg-stone-50">
+    <section id="contact" className="py-32 bg-stone-50">
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           {/* Left - Copy */}
-          <div className="animate-on-scroll">
+          <motion.div
+            initial={{ opacity: 0, x: -40 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: '-100px' }}
+            transition={{ type: 'spring', stiffness: 70, damping: 20 }}
+          >
             <p className="text-sm font-semibold text-brand-600 uppercase tracking-widest mb-3">Get In Touch</p>
             <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 tracking-tight">
               Ready to make your car{' '}
@@ -67,10 +73,15 @@ export default function Contact() {
                 </div>
               </div>
             </div>
-          </div>
+          </motion.div>
 
           {/* Right - Form */}
-          <div className="animate-on-scroll delay-200">
+          <motion.div
+            initial={{ opacity: 0, x: 40 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: '-100px' }}
+            transition={{ type: 'spring', stiffness: 70, damping: 20, delay: 0.15 }}
+          >
             <form
               id="contact-form"
               onSubmit={handleSubmit}
@@ -139,7 +150,7 @@ export default function Contact() {
                 We typically respond within 2–4 hours during business hours.
               </p>
             </form>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>
